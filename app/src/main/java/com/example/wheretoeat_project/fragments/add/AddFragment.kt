@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.wheretoeat_project.R
-import com.example.wheretoeat_project.data.User
-import com.example.wheretoeat_project.data.UserViewModel
+import com.example.wheretoeat_project.model.User
+import com.example.wheretoeat_project.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
 
