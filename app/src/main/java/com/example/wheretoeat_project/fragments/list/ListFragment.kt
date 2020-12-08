@@ -2,6 +2,7 @@ package com.example.wheretoeat_project.fragments.list
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -10,12 +11,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wheretoeat_project.R
+import com.example.wheretoeat_project.model.Restaurant
+import com.example.wheretoeat_project.repository.ApiRepository
+import com.example.wheretoeat_project.viewmodel.ApiViewModel
 import com.example.wheretoeat_project.viewmodel.UserViewModel
+import com.example.wheretoeat_project.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + Job()
 
     private lateinit var mUserViewModel: UserViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,16 +44,26 @@ class ListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        //UserViewModel
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
-            adapter.setData(user)
-        })
+        //ApiViewModel
+        launch {
+            val repository = ApiRepository()
+            val factory = ViewModelFactory(repository)
+            val restaurantViewModel =
+                ViewModelProvider(requireActivity(), factory).get(ApiViewModel::class.java)
+            restaurantViewModel.loadRestaurants("New York")
+            lateinit var restList: List<Restaurant>
+            restaurantViewModel.restaurants.observe(requireActivity(), { list ->
+                restList = list
+                adapter.setData(restList)
+            })
+        }
 
-        view.floatingActionButton.setOnClickListener{
+        //Add Button
+        view.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
+        //Delete Menu
         setHasOptionsMenu(true)
 
         return view
@@ -56,7 +80,7 @@ class ListFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteAllUser(){
+    private fun deleteAllUser() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
             mUserViewModel.deleteAllUsers()
