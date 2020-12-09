@@ -9,6 +9,6 @@ import retrofit2.http.Query
 interface SimpleApi {
 
     @GET("restaurants")
-    suspend fun getRestaurants(@Query("city")cities: String): RestaurantApiResponse
+    suspend fun getRestaurants(@Query("city") cities: String): RestaurantApiResponse
 
 }

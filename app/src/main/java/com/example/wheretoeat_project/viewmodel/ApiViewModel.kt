@@ -16,23 +16,23 @@ class ApiViewModel(private val repository: ApiRepository) : ViewModel() {
 
     private fun restaurantConverter(restaurantApiResponse: RestaurantApiResponse): List<Restaurant> {
         val list = mutableListOf<Restaurant>()
-        for (i in restaurantApiResponse.restaurants) {
+        for (item in restaurantApiResponse.restaurants) {
             val rest = Restaurant(
-                i.address,
-                i.area,
-                i.city,
-                i.country,
-                i.id,
-                i.image_url,
-                i.lat,
-                i.lng,
-                i.mobile_reserve_url,
-                i.name,
-                i.phone,
-                i.postal_code,
-                i.price,
-                i.reserve_url,
-                i.state
+                item.address,
+                item.area,
+                item.city,
+                item.country,
+                item.id,
+                item.image_url,
+                item.lat,
+                item.lng,
+                item.mobile_reserve_url,
+                item.name,
+                item.phone,
+                item.postal_code,
+                item.price,
+                item.reserve_url,
+                item.state
             )
             list.add(rest)
         }

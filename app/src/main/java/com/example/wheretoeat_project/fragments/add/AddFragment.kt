@@ -29,7 +29,7 @@ class AddFragment : Fragment() {
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        view.add_button.setOnClickListener{
+        view.add_button.setOnClickListener {
             insertDataToDatabase()
         }
 
@@ -39,24 +39,24 @@ class AddFragment : Fragment() {
     private fun insertDataToDatabase() {
         val firstName = addFirstName.text.toString()
         val lastName = addLastName.text.toString()
-        val age = addAge.text
+        val email = addEmail.text.toString()
 
-        if (inputCheck(firstName, lastName, age)){
+        if (inputCheck(firstName, lastName, email)) {
             //Create User object
-            val user = User(0, firstName, lastName, Integer.parseInt(age.toString()))
+            val user = User(0, firstName, lastName, email)
             //Add Data to Database
             mUserViewModel.addUser(user)
-            Toast.makeText(requireContext(), "Succesfully added!", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
             //Navigate Back
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
-        }
-        else{
-            Toast.makeText(requireContext(), "Please fill out all fields!", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(requireContext(), "Please fill out all fields!", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
-    private fun inputCheck(firstName: String, lastName: String, age: Editable): Boolean {
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.isEmpty())
+    private fun inputCheck(firstName: String, lastName: String, email: String): Boolean {
+        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && TextUtils.isEmpty(email))
     }
 
 }

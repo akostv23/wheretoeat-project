@@ -2,7 +2,6 @@ package com.example.wheretoeat_project.fragments.update
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -33,7 +32,7 @@ class UpdateFragment : Fragment() {
 
         view.updateFirstName.setText(args.currentUser.firstName)
         view.updateLastName.setText(args.currentUser.lastName)
-        view.updateAge.setText(args.currentUser.age.toString())
+        view.updateEmail.setText(args.currentUser.email)
 
         view.update_button.setOnClickListener {
             updateItem()
@@ -48,11 +47,11 @@ class UpdateFragment : Fragment() {
     private fun updateItem() {
         val firstName = updateFirstName.text.toString()
         val lastName = updateLastName.text.toString()
-        val age = Integer.parseInt(updateAge.text.toString())
+        val email = updateEmail.text.toString()
 
-        if (inputCheck(firstName, lastName, updateAge.text)) {
+        if (inputCheck(firstName, lastName, email)) {
             // Create User Object
-            val updateUser = User(args.currentUser.id, firstName, lastName, age)
+            val updateUser = User(args.currentUser.id, firstName, lastName, email)
             // Update Current User
             mUserViewModel.updateUser(updateUser)
             Toast.makeText(requireContext(), "Updated Successfully!", Toast.LENGTH_SHORT).show()
@@ -65,8 +64,8 @@ class UpdateFragment : Fragment() {
         }
     }
 
-    private fun inputCheck(firstName: String, lastName: String, age: Editable): Boolean {
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.isEmpty())
+    private fun inputCheck(firstName: String, lastName: String, email: String): Boolean {
+        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && TextUtils.isEmpty(email))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

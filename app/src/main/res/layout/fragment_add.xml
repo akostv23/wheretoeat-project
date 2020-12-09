@@ -34,13 +34,13 @@
         app:layout_constraintTop_toBottomOf="@id/addFirstName" />
 
     <EditText
-        android:id="@+id/addAge"
+        android:id="@+id/addEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Age"
-        android:inputType="number"
+        android:hint="abc@gmail.com"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +55,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAge" />
+        app:layout_constraintTop_toBottomOf="@+id/addEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

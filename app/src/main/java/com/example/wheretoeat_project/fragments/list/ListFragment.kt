@@ -58,12 +58,12 @@ class ListFragment : Fragment(), CoroutineScope {
             })
         }
 
-        //Add Button
+        //Add Button User
         view.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
-        //Delete Menu
+        //Delete Menu User
         setHasOptionsMenu(true)
 
         return view
