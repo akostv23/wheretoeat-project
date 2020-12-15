@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wheretoeat_project.R
@@ -35,7 +37,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         Glide.with(holder.itemView.context).load(currentItem.image_url).into(holder.image).view
         holder.name.text = currentItem.name
         holder.address.text = currentItem.address
-        holder.price.text = currentItem.price.toString()
+        holder.price.text = "$".repeat(currentItem.price)
         holder.city.text = currentItem.city
         holder.favorite.setOnClickListener {
             holder.favorite.setImageResource(R.drawable.ic_favorite)
@@ -43,6 +45,24 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.favorite.setOnLongClickListener {
             holder.favorite.setImageResource(R.drawable.ic_favorite_empty)
             true
+        }
+        holder.itemView.setOnClickListener{
+            val bundle = bundleOf(
+                "image" to currentItem.image_url,
+                "name" to currentItem.name,
+                "address" to currentItem.address,
+                "city" to currentItem.city,
+                "state" to currentItem.state,
+                "area" to currentItem.area,
+                "postal_code" to currentItem.postal_code,
+                "country" to currentItem.country,
+                "price" to "$".repeat(currentItem.price),
+                "lat" to currentItem.lat,
+                "lng" to currentItem.lng
+                )
+
+            holder.itemView.findNavController().navigate(R.id.action_listFragment_to_detailsFragment, bundle)
+
         }
     }
 

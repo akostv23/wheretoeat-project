@@ -16,6 +16,7 @@ import com.example.wheretoeat_project.repository.ApiRepository
 import com.example.wheretoeat_project.viewmodel.ApiViewModel
 import com.example.wheretoeat_project.viewmodel.UserViewModel
 import com.example.wheretoeat_project.viewmodel.ViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,8 +36,12 @@ class ListFragment : Fragment(), CoroutineScope {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
+
+        val navBar: BottomNavigationView? = this.activity?.findViewById(R.id.bottomNavigationView)
+        navBar!!.visibility = View.VISIBLE
 
         //RecyclerView
         val adapter = ListAdapter()
@@ -50,7 +55,7 @@ class ListFragment : Fragment(), CoroutineScope {
             val factory = ViewModelFactory(repository)
             val restaurantViewModel =
                 ViewModelProvider(requireActivity(), factory).get(ApiViewModel::class.java)
-            restaurantViewModel.loadRestaurants("New York")
+            restaurantViewModel.loadRestaurants("Detroit")
             lateinit var restList: List<Restaurant>
             restaurantViewModel.restaurants.observe(requireActivity(), { list ->
                 restList = list
@@ -68,6 +73,8 @@ class ListFragment : Fragment(), CoroutineScope {
 
         return view
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)
