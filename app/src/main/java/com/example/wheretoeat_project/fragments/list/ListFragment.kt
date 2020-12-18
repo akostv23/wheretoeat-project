@@ -55,7 +55,7 @@ class ListFragment : Fragment(), CoroutineScope {
             val factory = ViewModelFactory(repository)
             val restaurantViewModel =
                 ViewModelProvider(requireActivity(), factory).get(ApiViewModel::class.java)
-            restaurantViewModel.loadRestaurants("Detroit")
+            restaurantViewModel.loadRestaurants("US")
             lateinit var restList: List<Restaurant>
             restaurantViewModel.restaurants.observe(requireActivity(), { list ->
                 restList = list
@@ -73,8 +73,6 @@ class ListFragment : Fragment(), CoroutineScope {
 
         return view
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)

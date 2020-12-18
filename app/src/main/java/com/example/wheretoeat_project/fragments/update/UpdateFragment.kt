@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.wheretoeat_project.R
 import com.example.wheretoeat_project.model.User
 import com.example.wheretoeat_project.viewmodel.UserViewModel
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 
@@ -35,7 +36,7 @@ class UpdateFragment : Fragment() {
         view.updateEmail.setText(args.currentUser.email)
 
         view.update_button.setOnClickListener {
-            updateItem()
+            //updateItem()
         }
 
         //Add Menu
@@ -44,25 +45,25 @@ class UpdateFragment : Fragment() {
         return view
     }
 
-    private fun updateItem() {
-        val firstName = updateFirstName.text.toString()
-        val lastName = updateLastName.text.toString()
-        val email = updateEmail.text.toString()
-
-        if (inputCheck(firstName, lastName, email)) {
-            // Create User Object
-            val updateUser = User(args.currentUser.id, firstName, lastName, email)
-            // Update Current User
-            mUserViewModel.updateUser(updateUser)
-            Toast.makeText(requireContext(), "Updated Successfully!", Toast.LENGTH_SHORT).show()
-            // Navigate Back
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-
-        } else {
-            Toast.makeText(requireContext(), "Please fill out all fields!", Toast.LENGTH_SHORT)
-                .show()
-        }
-    }
+//    private fun updateItem() {
+//        val firstName = updateFirstName.text.toString()
+//        val lastName = updateLastName.text.toString()
+//        val email = updateEmail.text.toString()
+//
+//        if (inputCheck(firstName, lastName, email)) {
+//            // Create User Object
+//            val updateUser = User(args.currentUser.id, firstName, lastName, email)
+//            // Update Current User
+//            mUserViewModel.updateUser(updateUser)
+//            Toast.makeText(requireContext(), "Updated Successfully!", Toast.LENGTH_SHORT).show()
+//            // Navigate Back
+//            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+//
+//        } else {
+//            Toast.makeText(requireContext(), "Please fill out all fields!", Toast.LENGTH_SHORT)
+//                .show()
+//        }
+//    }
 
     private fun inputCheck(firstName: String, lastName: String, email: String): Boolean {
         return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && TextUtils.isEmpty(email))

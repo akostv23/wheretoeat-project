@@ -39,13 +39,13 @@ class ApiViewModel(private val repository: ApiRepository) : ViewModel() {
         return list
     }
 
-    private suspend fun getRestaurants(city: String){
-        val restRepo = repository.getRestaurants(city)
+    private suspend fun getRestaurants(country: String){
+        val restRepo = repository.getRestaurants(country)
         restaurants.value = restaurantConverter(restRepo)
     }
 
-    suspend fun loadRestaurants(city: String){
-        getRestaurants(city)
+    suspend fun loadRestaurants(country: String){
+        getRestaurants(country)
     }
 
 }

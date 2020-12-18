@@ -21,7 +21,6 @@ class DetailsFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_details, container, false)
 
-        val image = requireArguments().get("image").toString()
         val name = requireArguments().get("name").toString()
         val address = requireArguments().get("address").toString()
         val city = requireArguments().get("city").toString()
@@ -29,12 +28,12 @@ class DetailsFragment : Fragment() {
         val area = requireArguments().get("area").toString()
         val postal_code = requireArguments().get("postal_code").toString()
         val country  = requireArguments().get("country").toString()
-        val price = requireArguments().get("price").toString()
+        val phone = requireArguments().get("phone").toString()
         val lat = requireArguments().get("lat").toString()
         val lng = requireArguments().get("lng").toString()
-        val phone = requireArguments().get("phone").toString()
+        val price = requireArguments().get("price").toString()
         val reserve_url = requireArguments().get("reserve_url").toString()
-
+        val image = requireArguments().get("image_url").toString()
 
         view.apply {
             findViewById<TextView>(R.id.restaurant_name).text = name
@@ -76,7 +75,5 @@ class DetailsFragment : Fragment() {
 
         return view
     }
-
-
 
 }

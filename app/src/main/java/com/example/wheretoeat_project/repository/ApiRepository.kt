@@ -6,8 +6,8 @@ import retrofit2.Response
 
 class ApiRepository {
 
-    suspend fun getRestaurants(city: String): RestaurantApiResponse {
-        return RetrofitInstance.api.getRestaurants(city)
+    suspend fun getRestaurants(country: String): RestaurantApiResponse {
+        return RetrofitInstance.api.getRestaurants(country)
     }
 
 }
