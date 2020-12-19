@@ -29,6 +29,7 @@ class ProfileFragment : Fragment() {
     private lateinit var phone: TextView
 
     private lateinit var loginButton: Button
+    private lateinit var favButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,12 +59,15 @@ class ProfileFragment : Fragment() {
             email = findViewById(R.id.email)
             address = findViewById(R.id.address)
             loginButton = findViewById(R.id.login_button)
+            favButton = findViewById(R.id.fav_button)
         }
 
-
-
-        loginButton.setOnClickListener{
+        loginButton.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+        }
+
+        favButton.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_favoritesFragment)
         }
 
     }

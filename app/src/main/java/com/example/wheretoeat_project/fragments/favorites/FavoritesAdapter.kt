@@ -1,6 +1,5 @@
-package com.example.wheretoeat_project.fragments.list
+package com.example.wheretoeat_project.fragments.favorites
 
-import android.provider.SyncStateContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +11,14 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wheretoeat_project.R
-import com.example.wheretoeat_project.fragments.favorites.FavoritesFragment
 import com.example.wheretoeat_project.model.Favorites
-import com.example.wheretoeat_project.model.Restaurant
 import com.example.wheretoeat_project.utils.Constants
 import com.example.wheretoeat_project.viewmodel.UserViewModel
 
-class ListAdapter(val mUserViewModel: UserViewModel) :
-    RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class FavoritesAdapter(val mUserViewModel: UserViewModel) :
+    RecyclerView.Adapter<FavoritesAdapter.MyViewHolder>() {
 
-    private var restaurantList = emptyList<Restaurant>()
+    private var fav_List = emptyList<Favorites>()
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image = itemView.findViewById<ImageView>(R.id.restaurantImage)
@@ -39,30 +36,13 @@ class ListAdapter(val mUserViewModel: UserViewModel) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = restaurantList[position]
+        val currentItem = fav_List[position]
         Glide.with(holder.itemView.context).load(currentItem.image_url).into(holder.image).view
-        for (fav in FavoritesFragment.favList) {
-            if (fav.name == currentItem.name) {
-                holder.favorite.setImageResource(R.drawable.ic_favorite)
-            }
-        }
         holder.name.text = currentItem.name
         holder.address.text = currentItem.address
         holder.price.text = "$".repeat(currentItem.price)
         holder.city.text = currentItem.city
-        holder.favorite.setOnClickListener {
-            holder.favorite.setImageResource(R.drawable.ic_favorite)
-            mUserViewModel.addFavorites(
-                Favorites(
-                    Constants.U_EMAIL,
-                    currentItem.address,
-                    currentItem.city,
-                    currentItem.image_url,
-                    currentItem.name,
-                    currentItem.price
-                )
-            )
-        }
+        holder.favorite.setImageResource(R.drawable.ic_favorite)
         holder.favorite.setOnLongClickListener {
             holder.favorite.setImageResource(R.drawable.ic_favorite_empty)
             mUserViewModel.deleteFavorite(
@@ -83,27 +63,22 @@ class ListAdapter(val mUserViewModel: UserViewModel) :
                 "name" to currentItem.name,
                 "address" to currentItem.address,
                 "city" to currentItem.city,
-                "state" to currentItem.state,
-                "area" to currentItem.area,
-                "postal_code" to currentItem.postal_code,
-                "country" to currentItem.country,
                 "price" to "$".repeat(currentItem.price),
-                "lat" to currentItem.lat,
-                "lng" to currentItem.lng
             )
 
             holder.itemView.findNavController()
-                .navigate(R.id.action_listFragment_to_detailsFragment, bundle)
+                .navigate(R.id.action_profileFragment_to_favoritesFragment, bundle)
 
         }
     }
 
     override fun getItemCount(): Int {
-        return restaurantList.size
+        return fav_List.size
     }
 
-    fun setData(restaurant: List<Restaurant>) {
-        this.restaurantList = restaurant
+    fun setData() {
+        this.fav_List = FavoritesFragment.favList
         notifyDataSetChanged()
     }
+
 }

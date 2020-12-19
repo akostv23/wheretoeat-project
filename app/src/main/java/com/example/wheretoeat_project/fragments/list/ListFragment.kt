@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -29,8 +30,7 @@ class ListFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
 
-    private lateinit var mUserViewModel: UserViewModel
-
+    private val mUserViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +44,7 @@ class ListFragment : Fragment(), CoroutineScope {
         navBar!!.visibility = View.VISIBLE
 
         //RecyclerView
-        val adapter = ListAdapter()
+        val adapter = ListAdapter(mUserViewModel)
         val recyclerView = view.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -68,39 +68,7 @@ class ListFragment : Fragment(), CoroutineScope {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
-        //Delete Menu User
-        setHasOptionsMenu(true)
-
         return view
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_delete) {
-            deleteAllUser()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun deleteAllUser() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes") { _, _ ->
-            mUserViewModel.deleteAllUsers()
-            Toast.makeText(
-                requireContext(),
-                "Successfully removed everything!",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        builder.setNegativeButton("No") { _, _ ->
-
-        }
-        builder.setTitle("Delete everything?")
-        builder.setMessage("Are you sure you want to delete everything?")
-        builder.create().show()
     }
 
 }

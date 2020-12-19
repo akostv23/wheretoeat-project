@@ -2,13 +2,9 @@ package com.example.wheretoeat_project.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.wheretoeat_project.model.Cities
 import com.example.wheretoeat_project.model.Restaurant
 import com.example.wheretoeat_project.model.RestaurantApiResponse
 import com.example.wheretoeat_project.repository.ApiRepository
-import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class ApiViewModel(private val repository: ApiRepository) : ViewModel() {
 
